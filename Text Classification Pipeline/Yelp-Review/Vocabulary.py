@@ -3,7 +3,7 @@ class Vocabulary:
         if token_to_int is None:
             token_to_int = {}
         self._token_to_int = token_to_int
-        self._int_to_token = {token_to_int[i]:i for in token_to_int.keys()}
+        self._int_to_token = {token_to_int[i]:i for i in token_to_int.keys()}
         self._unk_token = unk_token
         self.unk_int = self.add_token(unk_token)
         
@@ -24,12 +24,17 @@ class Vocabulary:
                 'unk_token': self._unk_token}
     
     @classmethod
-    def from_serializable_dict(cls, dict_):
+    def from_serializable_dict(cls, contents):
         '''instantiate a vocabulary from a serialized dictionary'''
-        return cls(**dict_)
+        return cls(**contents)
     
-    def lookup_int_of_token(self, token):
+    def get_idx_of_token(self, token):
         return self._token_to_int.get(token, unk_int)
+    
+    def get_token_on_idx(self, idx):
+        if idx not in self._int_to_token:
+            raise KeyError(f'The index {idx} is not a part of the vocabulary')
+        return self._int_to_token.get(idx)
     
     def __str__(self):
         return f'<Vocabulary of size {len(self)}>'
