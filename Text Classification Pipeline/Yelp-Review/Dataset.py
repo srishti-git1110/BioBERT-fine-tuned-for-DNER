@@ -1,5 +1,6 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
+from Vectorizer import ReviewVectorizer
 
 class YelpReview(Dataset):
     def __init__(self, review_df, vectorizer):
