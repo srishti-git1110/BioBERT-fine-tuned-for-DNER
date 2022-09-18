@@ -1,4 +1,4 @@
-def evaluate_test_data(batch_generator, classifier, criterion, train_state):
+def evaluate_test_data(batch_generator, classifier, compute_accuracy, criterion, train_state):
   classifier.eval()
   running_mean_loss = 0.0
   running_mean_accuracy = 0.0
@@ -13,5 +13,3 @@ def evaluate_test_data(batch_generator, classifier, criterion, train_state):
 
   train_state['test_loss'] = running_mean_loss
   train_state['test_acc'] = running_mean_accuracy
-    
-    
