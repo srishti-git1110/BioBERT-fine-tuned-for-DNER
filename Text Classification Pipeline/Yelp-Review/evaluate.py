@@ -1,3 +1,5 @@
+import torch
+import torch..nn.functional as F
 def evaluate_test_data(batch_generator, classifier, compute_accuracy, criterion, train_state):
   classifier.eval()
   running_mean_loss = 0.0
@@ -13,3 +15,29 @@ def evaluate_test_data(batch_generator, classifier, compute_accuracy, criterion,
 
   train_state['test_loss'] = running_mean_loss
   train_state['test_acc'] = running_mean_accuracy
+
+  
+def infer(review, classifier, vectorizer, preprocess_text, threshold=0.5):
+  """ Args:
+  review (str): the text review
+  classifier (Model): the trained model
+  vectorizer (ReviewVectorizer): the vectorizer associated with the classifier
+  threshold (float): the decision threshold
+  preprocess_text (function): to preprocess text review
+  
+  Returns:
+  (str): the class of the review"""
+  
+  review = preprocess_text(review)
+  vectorized_review = torch.tensor(vectorizer.vectorize(review))
+  pred = classifier(vectorized_review.view(1, -1))
+  prob = F.sigmoid(pred).item()
+  if prob > threshold:
+    return "negative"
+  else:
+    return "positive"
+  
+  
+  
+  
+  
