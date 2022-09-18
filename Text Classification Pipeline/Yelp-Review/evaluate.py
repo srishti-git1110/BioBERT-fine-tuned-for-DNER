@@ -37,7 +37,19 @@ def infer(review, classifier, vectorizer, preprocess_text, threshold=0.5):
   else:
     return "positive"
   
+def inspect_weights(classifier, vectorizer):
+  fc1_weights = classifier.fc1.weight.detach()[0] # detach to stop the expensive graph building by autograd
+  _, indices = torch.sort(fc1_weights, descending=True, dim=0)
+  indices = indices.numpy().tolist()
   
-  
-  
+  print("most negative words")
+  for i in range(20):
+    print(vectorizer.vocab.get_token_on_idx(indices[i]))
+    
+  print("most positive words")
+  indices.reverse()
+  for i in range(20):
+    print(vectorizer.vocab.get_token_on_idx(indices[i]))
+    
+                                         
   
