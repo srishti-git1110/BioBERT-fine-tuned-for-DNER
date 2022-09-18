@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 class Model(nn.module):
     def __init__(self, input_size):
-        super(Mdel, self).__init__()
+        super(Model, self).__init__()
         self.fc1 = nn.Linear(input_size, 1)
         
     def forward(self, x, apply_sigmoid=False):
