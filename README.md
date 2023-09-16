@@ -1,13 +1,10 @@
-# Short-NLP-tasks
+# A Python Pipeline for Classifying Text Data
+This repository contains an example of how an end to end text classification pipeline can be built using Python (PyTorch).
 
-Quick practical demos for NLP tasks like disease NER etc. using libraries like spaCy, SciSpacy, NLTK & so on.
+I wrote this code in my early days of learning NLP. 
+The techniques in this code are (also, were) undoubtedly obsolete, but back then it was a cool exercise for me to code up an end to end pipeline myself while I was starting to learn.
 
-
-1) NEL_demo_working.ipynb - demonstrates how scispacy & spaCy can be used for tagging diseases in biomedical text data; and further normalise to a particular ontology like MeSH, UMLS etc.
-To change the ontology simply change the following in the config.
-"linker_name": "mesh"
-
-
+The code structure is fairly simple so I am skipping adding a description for it.
 
 No plagiarism intended. Project only for educational purpose.
 
