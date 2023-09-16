@@ -1,18 +1,25 @@
 import numpy as np 
 import pandas as pd
+import collections
+import re
+from argparse import Namespace
+import torch.optim as optim
+from Dataset import YelpReview
+from model import Model
+
 
 train = pd.read_csv('../input/yelp-review-dataset/yelp_review_polarity_csv/train.csv', header=None)
 train.rename(columns={0:'class',
                      1:'review'}, inplace=True)
 subset = train.iloc[:56000,:]
 
-import collections
+
 by_rating = collections.defaultdict(list)
 for _, row in subset.iterrows():
     by_rating[row['class']].append(row.to_dict())
     
 final_list = []
-import numpy as np
+
 for class_label, row_dict_list in (sorted(by_rating.items())):
     np.random.shuffle(row_dict_list)
     n_tot = len(row_dict_list)
@@ -32,7 +39,7 @@ for class_label, row_dict_list in (sorted(by_rating.items())):
 review_df = pd.DataFrame(final_list) # final_list is a list of dictionaries
 review_df.head()
 
-import re
+
 def preprocess_reviews(text):
     text = text.lower()
     text = re.sub(r'([.;@,?!&])', r" \1 ",text)
@@ -53,7 +60,6 @@ def generate_batches(dataset, batch_size, shuffle=True, drop_last=True, device='
         yield out_dict
         
 
-from argparse import Namespace
 args = Namespace(
     cutoff=25,
     model_file='yelp_model.pth',
@@ -65,10 +71,6 @@ args = Namespace(
     early_stopping_criterion=5
     )
 
-
-import torch.optim as optim
-from Dataset import YelpReview
-from model import Model
 
 def make_train_state(args):
     return {'epoch': 0,
@@ -132,6 +134,3 @@ for epoch in range(args.num_epochs):
         
         train_state['val_loss'].append(running_mean_loss)
         train_state['val_acc'].append(running_mean_acc)
-      
-
-        
